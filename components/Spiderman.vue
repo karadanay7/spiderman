@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 left-0 w-full h-screen">
+  <div class="fixed top-0 left-12 w-full ">
     <!-- Container for the 3D model -->
     <div ref="container" class="w-full h-full"></div>
   </div>
@@ -15,11 +15,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const container = ref(null);
+const assetPath = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/2666677/';
 
 onMounted(() => {
   // Setup basic Three.js scene
   const scene = new THREE.Scene();
-
+  const fog = new THREE.Fog(0x000000, 30); // Black fog with near and far distance
+  scene.fog = fog;
   const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.2, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -30,7 +32,28 @@ onMounted(() => {
 
   scene.add(light);
 
-
+ // Add particles (smoke effect)
+ const tex = new THREE.TextureLoader().setPath(assetPath).load('smoke_01.png');
+  const material = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    depthWrite: false,
+    map: tex,
+    transparent: true
+  });
+  const geometry = new THREE.PlaneGeometry(15, 15);
+  const particles = [];
+  const size = 5;
+  for (let i = 0; i < 40; i++) {
+    const particle = new THREE.Mesh(geometry, material);
+    particle.position.set(
+      (Math.random() +1) * size,
+      (Math.random() - 0.5) * size,
+      (Math.random() - 1.3) * size
+    );
+    particle.rotation.z = Math.random() * Math.PI * 3;
+    scene.add(particle);
+    particles.push(particle);
+  }
 
 
   // Load the GLB model
@@ -51,12 +74,21 @@ onMounted(() => {
     camera.lookAt(camera.position); // Ensure camera is looking at the model
 
     // Animation loop
+     // Animation loop
+     const clock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
+
+      // Update particles (smoke effect)
+      const dt = clock.getDelta();
+      particles.forEach(particle => {
+        const z = particle.rotation.z;
+        particle.lookAt(camera.position);
+        particle.rotation.z = z + dt * 0.1;
+      });
     }
     animate();
-
     // Use GSAP to animate the model and camera on scroll
     ScrollTrigger.create({
       trigger: document.body,
@@ -81,7 +113,7 @@ onMounted(() => {
         // Log model position during scroll
         console.log('Model position during scroll:', model.position);
         fog.near = 10 + progress * 10; // Animate the fog near distance
-        fog.far = 50 - progress * 30;   // Animate the fog far distance
+        fog.far = 60 - progress * 60;   // Animate the fog far distance
 
         // Adjust light position
         light.position.set(
