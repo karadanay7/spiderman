@@ -7,12 +7,12 @@
     "module": true,
     "resourceType": "script"
   },
-  "/Users/aysegulkaradan/3-d models/spiderman/node_modules/nuxt/dist/app/entry.js": {
+  "/Users/aysegulkaradan/3D models/spiderman/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
     "isEntry": true,
-    "file": "/Users/aysegulkaradan/3-d models/spiderman/node_modules/nuxt/dist/app/entry.js"
+    "file": "/Users/aysegulkaradan/3D models/spiderman/node_modules/nuxt/dist/app/entry.js"
   }
 }

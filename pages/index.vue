@@ -13,7 +13,7 @@
       <div class="min-h-screen flex items-center justify-start text-white  relative w-full ml-20">
         <div class="text-start ">
           <iframe width="560" height="315" src="https://www.youtube.com/embed/e5wUilOeOmg?si=h9Pe7q65ltO-x8FS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <h1 class="text-3xl font-extrabold mb-4">SPIDERMAN 3: THE DARK SIDE OF HEROISM</h1>
+          <h1 class="text-3xl font-extrabold my-4">SPIDERMAN 3: THE DARK SIDE OF HEROISM</h1>
           <p class="text-xl mb-8 italic">"Every hero has a dark side. Discover the untold story."</p>
           <a href="#second-page" class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg text-2xl font-semibold transition">Enter the Darkness</a>
         </div>
@@ -65,12 +65,8 @@
 </script>
 
 <style scoped>
-/* Ensure content is not covered by Spiderman component */
-section {
-  position: relative;
-  z-index: 20;
-  /* Ensure content is above the Spiderman component */
-}
+
+
 .linear-wipe-hero{
   
   
